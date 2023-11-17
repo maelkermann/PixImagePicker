@@ -3,8 +3,8 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-  compileSdkVersion 30
-  defaultConfig {
+    compileSdk 33
+    defaultConfig {
     applicationId "com.fxn.pixsample"
     minSdkVersion 19
     targetSdkVersion 30

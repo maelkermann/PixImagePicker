@@ -82,11 +82,31 @@ public abstract class PermUtil {
             List<String> permissionsNeeded = new ArrayList<String>();
             final List<String> permissionsList = new ArrayList<String>();
             if (!addPermission(permissionsList, Manifest.permission.CAMERA, fragment.getActivity()))
-                permissionsNeeded.add("CAMERA");
-            if (!addPermission(permissionsList, Manifest.permission.WRITE_EXTERNAL_STORAGE, fragment.getActivity()))
-                permissionsNeeded.add("WRITE_EXTERNAL_STORAGE");
+                permissionsNeeded.add(Manifest.permission.CAMERA);
+
+            if ( Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU ) {
+                if ( !addPermission(permissionsList, Manifest.permission.READ_MEDIA_IMAGES, fragment.getActivity())) {
+                    permissionsNeeded.add(Manifest.permission.READ_MEDIA_IMAGES);
+                }
+            }
+
+            else if ( Build.VERSION.SDK_INT >= Build.VERSION_CODES.P ) {
+                if (!addPermission(permissionsList, Manifest.permission.READ_EXTERNAL_STORAGE, fragment.getActivity())) {
+                    permissionsNeeded.add(Manifest.permission.READ_EXTERNAL_STORAGE);
+                }
+            }
+
+            else {
+                if (!addPermission(permissionsList, Manifest.permission.READ_EXTERNAL_STORAGE, fragment.getActivity())) {
+                    permissionsNeeded.add(Manifest.permission.READ_EXTERNAL_STORAGE);
+                }
+                if (!addPermission(permissionsList, Manifest.permission.WRITE_EXTERNAL_STORAGE, fragment.getActivity())) {
+                    permissionsNeeded.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                }
+            }
+
             if (mode != Options.Mode.Picture && !addPermission(permissionsList, Manifest.permission.RECORD_AUDIO, fragment.getActivity())) {
-                permissionsNeeded.add("RECORD_AUDIO");
+                permissionsNeeded.add(Manifest.permission.RECORD_AUDIO);
             }
             if (permissionsList.size() > 0) {
                 fragment.requestPermissions(permissionsList.toArray(new String[permissionsList.size()]),
