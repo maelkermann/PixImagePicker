@@ -463,6 +463,9 @@ public class Pix extends AppCompatActivity implements View.OnTouchListener {
                 result.toFile(photo, new FileCallback() {
                     @Override
                     public void onFileReady(@Nullable File photo) {
+                        if (photo == null) {
+                            return;
+                        }
                         Utility.vibe(Pix.this, 50);
                         Img img = new Img("", "", photo.getAbsolutePath(), "", 1);
                         selectionList.add(img);
